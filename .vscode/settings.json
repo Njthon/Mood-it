@@ -1,0 +1,5 @@
+{
+    "html.format.wrapAttributes": "force-expand-multiline",
+    "typescript.format.semicolons": "remove",
+    "javascript.format.semicolons": "remove"
+}

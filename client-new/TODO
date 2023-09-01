@@ -1,0 +1,20 @@
+Visual libraries
+
+- https://www.vantajs.com
+-
+
+TASKS
+
+> Creating the top header
+
+1.
+
+- Integrate chosen the font family, and use it for the title "Mood it"
+- Create 2 instances of Kloud, (1 behind and 1 in front of the title, with z-index)
+- Their configuration (color1, color2, speed) is passed as prop by the parent (and the component listen to its changes in orger to update the Kloud instances)
+
+2. Display the current day and the 2 buttons (previous /next)
+
+-
+
+> Create the library of icons
