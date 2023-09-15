@@ -2,15 +2,18 @@
   <div class="container">
     <TitleApp />
     <CalendarApp />
-    <HeaderApp />
     <div v-show="showAddTask">
       <AddTaskApp />
-
     </div>
+    <EditTaskApp
+      v-show="showEditTask"
+      :task="taskStore.tasks.find(task => task.id === editingTaskId)"
+    />
     <div class="tasks">
       <TaskApp
+        @edit-click="toggleEditTask"
         v-for="task in taskStore.tasks"
-        :key="task._id"
+        :key="task.id"
         :task="task"
       />
     </div>
@@ -22,22 +25,30 @@
 </template>
 
 <script setup lang="ts">
+import type { ITask } from "../types/Task"
 import { ref } from "vue"
 import CalendarApp from "./components/CalendarApp.vue"
 import TitleApp from "./components/TitleApp.vue"
 import FooterApp from "./components/FooterApp.vue"
 import TaskApp from "./components/TaskApp.vue"
 import useTaskStore from "./stores/useTaskStore"
-import HeaderApp from "../src/components/HeaderApp.vue"
 import AddTaskApp from "./components/AddTaskApp.vue"
+import EditTaskApp from "./components/EditTaskApp.vue"
 
 const showAddTask = ref(false)
+const showEditTask = ref(false)
+const editingTaskId = ref(null)
 const taskStore = useTaskStore()
-
-taskStore.fetchTasks()
 
 function toggleAddTask() {
   showAddTask.value = !showAddTask.value
+}
+
+function toggleEditTask(taskId: null) {
+  if (taskId !== null) {
+    editingTaskId.value = taskId
+    showEditTask.value = !showEditTask.value
+  }
 }
 </script>
 

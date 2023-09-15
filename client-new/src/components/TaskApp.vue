@@ -1,28 +1,62 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <div class="task-container">
-    <h3>{{ task?.text }}</h3>
-    <p>{{ task?.day }}</p>
-    <i
-      @click="taskStore.deleteTask(task)"
-      class="fas fa-times"
-    ></i>
+  <div>
+    <div
+      v-for="task in tasks"
+      :key="task.id"
+    >
+      <form
+        class="update-form"
+        @submit.prevent="saveTask()"
+      >
+        <div v-if="!task.isEditing">
+          <div @click="editTask">{{ task.title }}</div>
+        </div>
+        <div v-else>
+          <input
+            type="text"
+            v-model="task.title"
+          />
+          <button @click="saveTask">Save</button>
+          <button @click="deleteTask">Delete</button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import type { ITask } from "../types/Task"
 import useTaskStore from '@/stores/useTaskStore'
+import { computed } from 'vue'
 
-defineProps<{
+const taskStore = useTaskStore()
+
+const props = defineProps<{
   task: ITask
 }>()
 
-const taskStore = useTaskStore()
-</script> 
+const tasks = computed(() => taskStore.tasks)
+
+const editTask = () => {
+  // eslint-disable-next-line vue/no-mutating-props
+  props.task.isEditing = true
+}
+
+const saveTask = () => {
+  // eslint-disable-next-line vue/no-mutating-props
+  props.task.isEditing = false
+  taskStore.updateTask(props.task)
+}
+
+const deleteTask = () => {
+  taskStore.deleteTask(props.task)
+  console.log('deleted')
+}
+</script>
 
 <style scoped lang="scss">
-.body-container {}
-
 .fas {
   color: red;
 }

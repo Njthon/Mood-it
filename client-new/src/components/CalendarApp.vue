@@ -23,9 +23,10 @@
 
 <script setup lang="ts">
 import { format } from 'date-fns'
-import { ref } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { subDays, addDays } from 'date-fns'
 import { reactive } from 'vue'
+import { collection, query, where, getDocs, getFirestore } from "firebase/firestore"
 
 const date = reactive({ value: new Date() })
 
@@ -60,6 +61,14 @@ const prvClick = () => {
     formPrevDay.value = format(prevDay, 'dd/MM/yyyy')
 }
 
+// watchEffect(async () => {
+//     const db = getFirestore()
+//     const q = query(collection(db, "tasks"), where("plannedDate", "==", formattedDate.value))
+//     const querySnapshot = await getDocs(q)
+//     querySnapshot.forEach((doc) => {
+//         console.log(doc.id, " => ", doc.data())
+//     })
+// });
 
 
 </script>
