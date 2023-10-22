@@ -108,10 +108,8 @@ const props = defineProps<{
   task: ITask
 }>()
 
-const tasks = computed(() => taskStore.tasks)
-
 const filteredTasks = computed(() => {
-  return tasks.value.filter((task) => task.plannedDate === dateStore.formattedDate)
+  return taskStore.tasks.filter((task) => task.plannedDate === dateStore.formattedDate)
 })
 
 const editTask = (task: ITask) => {

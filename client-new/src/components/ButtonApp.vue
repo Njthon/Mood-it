@@ -9,7 +9,7 @@
         </button>
     </footer>
     <div
-        v-if="showAddTask"
+        v-show="showAddTask"
         class="container"
     >
         <AddTaskApp ref="addTaskRef" />
@@ -30,12 +30,9 @@ defineProps<{
 
 const onClick = () => {
     buttonText = buttonText === "Create" ? "Save" : "Create"
-    console.log(addTaskRef.value)
-
-    if (buttonText === "Save") {
+    if (buttonText === "Create") {
         //@ts-ignore child is not typed
         addTaskRef.value?.submitForm()
-        console.log(showAddTask.value)
     }
     showAddTask.value = !showAddTask.value
 
