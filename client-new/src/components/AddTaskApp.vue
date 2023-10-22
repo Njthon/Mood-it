@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
     <form
         class="add-form"
@@ -13,35 +14,36 @@
             />
         </div>
         <div class="form-control">
-            <label for="text">Description</label>
+            <label for="pleasure">Pleasure</label>
             <input
-                type="text"
-                v-model="text"
-                name="text"
-                placeholder="Add Info"
+                type="range"
+                v-model="scoring.pleasure"
+                name="pleasure"
+                min="1"
+                max="3"
+                step="1"
             />
         </div>
         <div class="form-control">
-            <label for="text">pleaseure</label>
+            <label for="stress">Stress</label>
             <input
-                type="number"
-                v-model="scoring"
-                name="text"
-                placeholder="Add Info"
+                type="range"
+                v-model="scoring.stress"
+                name="stress"
+                min="1"
+                max="3"
+                step="1"
             />
-            <label for="text">stress</label>
+        </div>
+        <div class="form-control">
+            <label for="time">Time</label>
             <input
-                type="nu,ber"
-                v-model="scoring"
-                name="text"
-                placeholder="Add Info"
-            />
-            <label for="text">time</label>
-            <input
-                type="text"
-                v-model="scoring"
-                name="text"
-                placeholder="Add Info"
+                type="range"
+                v-model="scoring.time"
+                name="time"
+                min="1"
+                max="3"
+                step="1"
             />
         </div>
         <input
@@ -56,7 +58,6 @@
                 v-model="plannedDate"
                 name="date"
                 placeholder="add a date"
-                required
             />
             <div
                 v-if="!plannedDate"
@@ -70,24 +71,34 @@
         />
     </form>
 </template>
-
+  
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import useTaskStore from '@/stores/useTaskStore'
 
 const text = ref('')
 const title = ref('')
-const scoring = ref('')
+const scoring = ref({
+    pleasure: 1,
+    stress: 1,
+    time: 1
+})
+
 const plannedDate = ref('')
 
 const taskStore = useTaskStore()
 
 const submitForm = () => {
+    console.log(title.value, text.value, scoring.value, plannedDate.value)
     taskStore.addTask(title.value, text.value, scoring.value, plannedDate.value)
 }
+
+defineExpose({
+    submitForm
+})
+
 </script>
-
-
+  
 <style scoped>
 .add-form {
     margin-bottom: 40px;
@@ -101,26 +112,15 @@ const submitForm = () => {
     display: block;
 }
 
-.form-control input {
+.form-control input[type="range"] {
     width: 100%;
-    height: 40px;
-    margin: 5px;
-    padding: 3px 7px;
+    margin: 5px 0;
+}
+
+.form-control span {
+    display: inline-block;
     font-size: 17px;
-}
-
-.form-control-check {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.form-control-check label {
-    flex: 1;
-}
-
-.form-control-check input {
-    flex: 2;
-    height: 20px;
+    margin-left: 10px;
+    min-width: 30px;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div id="canvas-container">
-        <canvas id="my-canvas" />
+        <canvas id="my-canvas-title" />
         <h1>MOOD IT</h1>
     </div>
 </template>
@@ -12,12 +12,12 @@ import * as klouds from 'klouds'
 
 onMounted(() => {
     var mySky = klouds.create({
-        selector: '#my-canvas',
-        layerCount: 5,
+        selector: '#my-canvas-title',
+        layerCount: 3,
         speed: 1,
-        cloudColor1: '#1ab3cc',
-        cloudColor2: '#c11ed4',
-        bgColor: '#c11ed4'
+        cloudColor1: '#A076F9',
+        cloudColor2: '#D7BBF5',
+        bgColor: '#6528F7'
     })
 })
 </script>
@@ -27,6 +27,7 @@ onMounted(() => {
     width: 100%;
     height: 70px;
     position: relative;
+    z-index: 1;
 }
 
 h1 {

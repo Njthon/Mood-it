@@ -1,9 +1,8 @@
 <template>
     <footer>
         <ButtonApp
-            @btn-click="$emit('toggle-add-task')"
-            :text="showAddTask ? 'Close' : 'AddTask'"
-            :color="showAddTask ? 'red' : '#1ab3cc'"
+            @btn-click="$emit()"
+            :color="showAddTask ? 'red' : 'rgba(255, 255, 255, 0.1)'"
         />
     </footer>
 </template>
@@ -15,16 +14,4 @@ defineProps<{
     showAddTask: boolean
 }>()
 </script>
-<style scoped>
-a {
-    color: #333;
-}
-
-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    margin-top: 30px;
-    text-align: center;
-}
-</style>
+<style scoped></style>

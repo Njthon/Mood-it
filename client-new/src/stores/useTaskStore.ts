@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import type { ITask } from "../types/Task"
+import type { ITask, IScoring } from "../types/Task"
 import {
     getFirestore, collection, getDocs,
     addDoc, deleteDoc, doc,
@@ -8,9 +8,8 @@ import {
     orderBy, serverTimestamp, getDoc,
     updateDoc
 } from 'firebase/firestore'
-import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check"
+import { Fireapp } from '@/main'
 import { getAuth } from 'firebase/auth'
-
 
 
 interface ITaskStoreState {
@@ -24,36 +23,52 @@ export default defineStore('task-store', {
         }
     },
     actions: {
-        async addTask(title: string, text: string, scoring: string, plannedDate: string) {
-            try {
-                const db = getFirestore()
-                const colRef = collection(db, 'tasks')
 
-                addDoc(colRef, {
-                    title: title,
-                    text: text,
-                    scoring: scoring,
-                    plannedDate: plannedDate,
-                    createdAt: serverTimestamp()
-                })
+        async addTask(title: string, text: string, scoring: IScoring, plannedDate: string) {
+            try {
+                const db = getFirestore(Fireapp)
+                const colRef = collection(db, 'tasks')
+                const auth = getAuth()
+                const user = auth.currentUser
+
+                if (user) {
+                    const userId = user.uid
+
+                    addDoc(colRef, {
+                        title: title,
+                        text: text,
+                        scoring: scoring,
+                        plannedDate: plannedDate,
+                        createdAt: serverTimestamp(),
+                        userId: userId,
+                    })
+                }
             } catch (error) {
                 console.error(error)
             }
         },
+        async changeText(text: string) {
 
+        },
         async fetchTasks() {
             try {
-                const db = getFirestore()
+                const db = getFirestore(Fireapp)
                 const colRef = collection(db, 'tasks')
-                const q = query(colRef, orderBy('createdAt'))
+                const auth = getAuth()
+                const user = auth.currentUser
 
-                onSnapshot(colRef, (snapshot) => {
-                    this.tasks = snapshot.docs.map((doc) => {
-                        return { ...doc.data(), id: doc.id } as ITask
-                        console.log(this.tasks)
+                if (user) {
+                    const userId = user.uid
+                    const q = query(colRef, where('userId', '==', userId), orderBy('createdAt'))
 
+                    onSnapshot(q, (snapshot) => {
+                        this.tasks = snapshot.docs.map((doc) => {
+                            const data = doc.data()
+                            data.id = doc.id
+                            return data as ITask
+                        })
                     })
-                })
+                }
             } catch (error) {
                 console.error('cannot fetch without a ball', error)
             }
@@ -67,7 +82,7 @@ export default defineStore('task-store', {
                 console.error(error)
             }
         }, async deleteTask(task: ITask) {
-            const db = getFirestore()
+            const db = getFirestore(Fireapp)
             const docRef = doc(db, 'tasks', task.id)
 
             deleteDoc(docRef)
@@ -76,7 +91,7 @@ export default defineStore('task-store', {
         },
         async updateTask(task: ITask) {
             try {
-                const db = getFirestore()
+                const db = getFirestore(Fireapp)
 
                 const docRef = doc(db, 'tasks', task.id)
 

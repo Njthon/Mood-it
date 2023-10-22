@@ -4,6 +4,7 @@ export interface IScoring {
     time: number
 }
 
+
 export interface ITask {
     id: string
     title: string
@@ -16,4 +17,6 @@ export interface ITask {
     plannedDate: string
     procrastinationCount: number
     isEditing: boolean
+    userId: string
+    isDone: boolean
 }

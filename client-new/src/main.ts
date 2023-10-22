@@ -10,14 +10,15 @@ import {
     query, where, orderBy, serverTimestamp, getDoc
 } from 'firebase/firestore'
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check"
-import { getAuth } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 import useTaskStore from './stores/useTaskStore'
+import '@fortawesome/fontawesome-free/css/all.css'
 
 const app = createApp(App)
 
 app.use(createPinia())
 
-app.mount('#app')
+
 
 
 import { initializeApp } from "firebase/app"
@@ -39,12 +40,17 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const Fireapp = initializeApp(firebaseConfig)
+export { Fireapp }
+
 const analytics = getAnalytics(Fireapp)
 
 const db = getFirestore()
+const auth = getAuth()
 
 const colRef = collection(db, 'tasks')
 
 const q = query(colRef, orderBy('createdAt'))
 
-const taskStore = useTaskStore()
+useTaskStore()
+
+app.mount('#app')
