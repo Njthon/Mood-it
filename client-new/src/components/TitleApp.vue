@@ -15,9 +15,9 @@ onMounted(() => {
         selector: '#my-canvas-title',
         layerCount: 3,
         speed: 1,
-        cloudColor1: '#A076F9',
-        cloudColor2: '#D7BBF5',
-        bgColor: '#6528F7'
+        cloudColor1: '#e6e4eb',
+        cloudColor2: '#FFFFFF',
+        bgColor: '#0092e8'
     })
 })
 </script>
@@ -27,7 +27,8 @@ onMounted(() => {
     width: 100%;
     height: 70px;
     position: relative;
-    z-index: 1;
+    z-index: -1;
+    transition: all 1s;
 }
 
 h1 {

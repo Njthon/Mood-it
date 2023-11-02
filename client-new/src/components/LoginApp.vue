@@ -63,7 +63,6 @@ const authStore = useAuthStore()
     backdrop-filter: blur(4px);
     z-index: 0;
     transform: translate(-50%, -50%);
-
 }
 
 .auth-inputs {

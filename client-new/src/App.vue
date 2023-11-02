@@ -7,22 +7,15 @@
       >
     </div>
     <TitleApp />
-    <CalendarApp />
-    <div>
+    <div class="web-app">
+      <HeaderMenuApp />
+      <div>
+      </div>
+      <div v-if="!taskStore.isXClicked">
+        <EditTaskModal v-show="taskStore.isEditedTaskOpen" />
+      </div>
+      <ButtonApp />
     </div>
-    <EditTaskApp
-      v-show="showEditTask"
-      :task="taskStore.tasks.find(task => task.id === editingTaskId)"
-    />
-    <div class="tasks">
-      <TaskApp
-        @edit-click="toggleEditTask"
-        v-for="task in taskStore.tasks"
-        :key="task.id"
-        :task="task"
-      />
-    </div>
-    <ButtonApp :color="showAddTask ? 'rgba(194, 161, 246, 1)' : 'rgba(194, 161, 246, 0.1)'" />
   </div>
   <div v-else>
     <AuthPageAppVue />
@@ -30,44 +23,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
 import ButtonApp from "./components/ButtonApp.vue"
 import AuthPageAppVue from "./components/AuthPageApp.vue"
-import CalendarApp from "./components/CalendarApp.vue"
+import HeaderMenuApp from "./components/HeaderMenuApp.vue"
 import TitleApp from "./components/TitleApp.vue"
-import FooterApp from "./components/FooterApp.vue"
-import TaskApp from "./components/TaskApp.vue"
+import TasksDashboard from "./components/TasksDashboard.vue"
 import useTaskStore from "./stores/useTaskStore"
-import AddTaskApp from "./components/AddTaskApp.vue"
-import EditTaskApp from "./components/EditTaskApp.vue"
-import LoginApp from "./components/LoginApp.vue"
+import EditTaskModal from "./components/EditTaskModal.vue"
 import { onMounted } from 'vue'
 import { useDateStore } from "./stores/date"
 import { useAuthStore } from '@/stores/auth'
-import type LoginAppVue from "./components/LoginApp.vue"
 
 const authStore = useAuthStore()
-const showAddTask = ref(false)
-const showEditTask = ref(false)
-const editingTaskId = ref(null)
 const taskStore = useTaskStore()
 const dateStore = useDateStore()
 
 onMounted(() => {
   dateStore
-
 })
-
-function onSaveClicked() {
-
-}
-
-function toggleEditTask(taskId: null) {
-  if (taskId !== null) {
-    editingTaskId.value = taskId
-    showEditTask.value = !showEditTask.value
-  }
-}
 </script>
 
 <style lang="scss">
@@ -87,13 +60,44 @@ function toggleEditTask(taskId: null) {
 body {
   font-family: "Poppins", sans-serif;
   height: 100%;
-  // background-color: #A076F9;
-  // background: linear-gradient(0deg, #6628F7, #E5CCF4 60%);
+  background-color: #ffffff;
+  font-weight: normal;
 
 }
 
 .tasks {
   padding: 10px;
   margin: 10px
+}
+
+@media (min-width: 650px) {
+  #canvas-container {
+    height: 100vh !important;
+    width: 100vw !important;
+    z-index: -5;
+    transition: all 1s;
+    overflow: hidden;
+    position: absolute !important;
+
+  }
+
+  #canvas-container h1 {
+    top: 30px;
+    right: 35%;
+  }
+
+  .web-app {
+    position: absolute;
+    z-index: 4;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 80%;
+    width: 40%;
+    border: 1px solid black;
+    border-radius: 5px;
+    backdrop-filter: blur(4px);
+    margin-top: 50px;
+  }
 }
 </style>

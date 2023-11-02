@@ -13,6 +13,7 @@
     "serve": "vue-cli-service serve --host localhost --port 7700"
   },
   "dependencies": {
+    "@fontsource/poppins": "^5.0.8",
     "axios": "^1.5.0",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.9",

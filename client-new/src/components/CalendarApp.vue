@@ -4,19 +4,21 @@
             class="prev-day"
             @click="prvClick()"
         >
-            <h4>{{ formPrevDay.value }}</h4>
+            <h5>{{ formPrevDay.value }}</h5>
             <div class="arrowL-container">
                 <h2 id="arrow-icon">⮞
                 </h2>
             </div>
 
         </div>
-        <div id="date-div">{{ formattedDate }}</div>
+        <div id="date-div">
+            <h4>{{ formattedDate }}</h4>
+        </div>
         <div
             class="next-day"
             @click="nxtClick()"
         >
-            <h4> {{ formNextDay.value }}</h4>
+            <h5> {{ formNextDay.value }}</h5>
             <div class="arrowR-container">
                 <h2>
                     ⮞
@@ -28,12 +30,11 @@
 
 <script setup lang="ts">
 import { format } from 'date-fns'
-import { ref } from 'vue'
 import { subDays, addDays } from 'date-fns'
 import { reactive } from 'vue'
-import TaskApp from './TaskApp.vue'
 import { useDateStore } from '@/stores/date'
 import { storeToRefs } from 'pinia'
+
 
 const store = useDateStore()
 
@@ -42,31 +43,31 @@ const { date, formattedDate } = storeToRefs(store)
 let nextDay = addDays(new Date(), 1)
 
 let formNextDay = reactive({
-    value: format(nextDay, 'yyyy-MM-dd')
+    value: format(nextDay, 'dd-MMM-yyyy')
 })
 let prevDay = subDays(new Date(), 1)
 
 let formPrevDay = reactive({
-    value: format(prevDay, 'yyyy-MM-dd')
+    value: format(prevDay, 'dd-MMM-yyyy')
 })
 
 const nxtClick = () => {
     let newDate = addDays(date.value, 1)
     date.value = newDate
-    formattedDate.value = format(newDate, 'yyyy-MM-dd')
+    formattedDate.value = format(newDate, 'dd-MMM-yyyy')
     nextDay = addDays(nextDay, 1)
-    formNextDay.value = format(nextDay, 'yyyy-MM-dd')
+    formNextDay.value = format(nextDay, 'dd-MMM-yyyy')
     prevDay = addDays(prevDay, 1)
-    formPrevDay.value = format(prevDay, 'yyyy-MM-dd')
+    formPrevDay.value = format(prevDay, 'dd-MMM-yyyy')
 }
 const prvClick = () => {
     let newDate = subDays(date.value, 1)
     date.value = newDate
-    formattedDate.value = format(newDate, 'yyyy-MM-dd')
+    formattedDate.value = format(newDate, 'dd-MMM-yyyy')
     nextDay = subDays(nextDay, 1)
-    formNextDay.value = format(nextDay, 'yyyy-MM-dd')
+    formNextDay.value = format(nextDay, 'dd-MMM-yyyy')
     prevDay = subDays(prevDay, 1)
-    formPrevDay.value = format(prevDay, 'yyyy-MM-dd')
+    formPrevDay.value = format(prevDay, 'dd-MMM-yyyy')
 }
 
 </script>
@@ -103,14 +104,22 @@ button {
 }
 
 .arrowR-container {
-    padding-right: 5px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
 }
 
 .arrowL-container {
-    padding-left: 5px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
+}
+
+.next-day h5 {
+    margin-right: 5px;
+    font-weight: normal;
+}
+
+.prev-day h5 {
+    margin-left: 5px;
+    font-weight: normal;
 }
 </style>

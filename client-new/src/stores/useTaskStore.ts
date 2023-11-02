@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import type { ITask, IScoring } from "../types/Task"
+import type { ITask, INewtask } from "../types/Task"
 import {
-    getFirestore, collection, getDocs,
+    getFirestore, collection,
     addDoc, deleteDoc, doc,
     onSnapshot, query, where,
-    orderBy, serverTimestamp, getDoc,
+    orderBy, serverTimestamp,
     updateDoc
 } from 'firebase/firestore'
 import { Fireapp } from '@/main'
@@ -14,17 +14,57 @@ import { getAuth } from 'firebase/auth'
 
 interface ITaskStoreState {
     tasks: ITask[]
+    editedTask: ITask | INewtask
+    isEditedTaskOpen: boolean
+    isXClicked: boolean
 }
 
 export default defineStore('task-store', {
     state: (): ITaskStoreState => {
         return {
             tasks: [],
+            editedTask: {
+                title: "",
+                text: "",
+                scoring: {
+                    pleasure: 1,
+                    stress: 1,
+                    time: 1
+                },
+                plannedDate: "",
+                isDone: false
+            },
+            isEditedTaskOpen: false,
+            isXClicked: false,
         }
     },
     actions: {
+        resetNewTask() {
+            this.editedTask = {
+                title: "",
+                text: "",
+                scoring: {
+                    pleasure: 1,
+                    stress: 1,
+                    time: 1
+                },
+                plannedDate: "",
+                isDone: false
+            }
+        },
+        openEditTask(task: ITask) {
+            this.editedTask = {
+                ...task
+            }
+            this.isEditedTaskOpen = true
+        },
+        clickX() {
+            this.isXClicked = true
+            this.isEditedTaskOpen = false
+            this.isXClicked = !this.isXClicked
 
-        async addTask(title: string, text: string, scoring: IScoring, plannedDate: string) {
+        },
+        async createTask() {
             try {
                 const db = getFirestore(Fireapp)
                 const colRef = collection(db, 'tasks')
@@ -33,12 +73,11 @@ export default defineStore('task-store', {
 
                 if (user) {
                     const userId = user.uid
-
                     addDoc(colRef, {
-                        title: title,
-                        text: text,
-                        scoring: scoring,
-                        plannedDate: plannedDate,
+                        title: this.editedTask.title,
+                        text: this.editedTask.text,
+                        scoring: this.editedTask.scoring,
+                        plannedDate: this.editedTask.plannedDate,
                         createdAt: serverTimestamp(),
                         userId: userId,
                     })
@@ -46,9 +85,6 @@ export default defineStore('task-store', {
             } catch (error) {
                 console.error(error)
             }
-        },
-        async changeText(text: string) {
-
         },
         async fetchTasks() {
             try {
@@ -87,17 +123,18 @@ export default defineStore('task-store', {
 
             deleteDoc(docRef)
                 .then(() => {
+                    console.log("deleted")
                 })
         },
-        async updateTask(task: ITask) {
+        async updateTask() {
             try {
                 const db = getFirestore(Fireapp)
 
-                const docRef = doc(db, 'tasks', task.id)
+                const docRef = doc(db, 'tasks', this.editedTask.id)
 
                 await updateDoc(docRef, {
-                    title: task.title,
-                    text: task.text
+                    title: this.editedTask.title,
+                    text: this.editedTask.text
                 })
             } catch (error) {
                 console.error(error)

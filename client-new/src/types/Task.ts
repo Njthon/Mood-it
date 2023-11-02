@@ -20,3 +20,12 @@ export interface ITask {
     userId: string
     isDone: boolean
 }
+
+export interface INewtask {
+    id?: string
+    title: string
+    text: string
+    scoring: IScoring
+    plannedDate: string
+    isDone: boolean
+}

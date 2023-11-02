@@ -22,9 +22,9 @@ onMounted(() => {
         selector: '#my-canvas',
         layerCount: 5,
         speed: 0.5,
-        cloudColor1: '#A076F9',
-        cloudColor2: '#D7BBF5',
-        bgColor: '#6528F7'
+        cloudColor1: '#FAF2EF',
+        cloudColor2: '#e6e4eb',
+        bgColor: '#0092e8'
     })
 })
 </script>
@@ -32,8 +32,10 @@ onMounted(() => {
 <style>
 #my-canvas {
     height: 100vh !important;
+    width: 100vw !important;
     position: relative;
     z-index: -2;
+    transition: all 2s;
 }
 
 .mood-title {

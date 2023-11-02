@@ -12,7 +12,6 @@ import {
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check"
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 import useTaskStore from './stores/useTaskStore'
-import '@fortawesome/fontawesome-free/css/all.css'
 
 const app = createApp(App)
 

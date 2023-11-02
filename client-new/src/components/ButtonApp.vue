@@ -8,42 +8,40 @@
             {{ buttonText }}
         </button>
     </footer>
-    <div
-        v-show="showAddTask"
-        class="container"
-    >
-        <AddTaskApp ref="addTaskRef" />
-    </div>
 </template>
 
 <script setup lang="ts">
-import AddTaskApp from './AddTaskApp.vue'
-import { ref } from 'vue'
+import useTaskStore from '@/stores/useTaskStore'
+import { computed } from 'vue'
 
-let buttonText = "Create"
-const showAddTask = ref(false)
-const addTaskRef = ref(null)
+const taskStore = useTaskStore()
 
-defineProps<{
-    color: string
-}>()
+const color = computed(() => {
+    return taskStore.isEditedTaskOpen ? 'rgba(0, 146, 232, 0.2)' : 'rgb(0, 146, 232)'
+})
+
+const buttonText = computed(() => {
+    return taskStore.isEditedTaskOpen ? "Save" : "Create"
+})
 
 const onClick = () => {
-    buttonText = buttonText === "Create" ? "Save" : "Create"
-    if (buttonText === "Create") {
-        //@ts-ignore child is not typed
-        addTaskRef.value?.submitForm()
+    if (taskStore.isEditedTaskOpen) {
+        if (taskStore.editedTask.id) {
+            taskStore.updateTask()
+        } else {
+            taskStore.createTask()
+        }
+    } else {
+        taskStore.resetNewTask()
     }
-    showAddTask.value = !showAddTask.value
-
-
+    taskStore.isEditedTaskOpen = !taskStore.isEditedTaskOpen
 }
 </script>
 
 <style scoped>
 .btn {
     display: inline-block;
-    color: #000000;
+    color: #ffffff;
     border: 1px black solid;
     border-bottom: 0;
     border-left: 0;
@@ -56,6 +54,7 @@ const onClick = () => {
     font-family: inherit;
     width: 100%;
     height: 70px;
+    z-index: 4;
 }
 
 .btn:focus {
