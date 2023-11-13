@@ -22,8 +22,11 @@ onMounted(() => {
         selector: '#my-canvas',
         layerCount: 5,
         speed: 0.5,
+        // @ts-ignore
         cloudColor1: '#FAF2EF',
+        // @ts-ignore
         cloudColor2: '#e6e4eb',
+        // @ts-ignore
         bgColor: '#0092e8'
     })
 })
@@ -40,7 +43,7 @@ onMounted(() => {
 
 .mood-title {
     position: absolute;
-    top: 15%;
+    top: 5%;
     left: 50%;
     transform: translate(-50%, -50%);
 

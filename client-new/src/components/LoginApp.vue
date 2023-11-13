@@ -21,6 +21,37 @@
             @click="authStore.login(email, password)"
         >Login</button>
         <p class="auth-inputs"></p>
+        <h5>or</h5>
+    </div>
+
+    <div class="external-auth">
+        <div
+            class="external-login-button"
+            @click="authStore.loginWithGoogle"
+        ><img
+                class="auth-logos"
+                src="/imgs/Google__G__Logo.svg.webp"
+            >Login with Google</div>
+        <div
+            class="external-login-button"
+            @click="authStore.loginWithFacebook"
+        ><img
+                class="auth-logos"
+                src="/imgs/675cafde751be69ba38a16504cb93e39.jpg"
+            >Login with Facebook</div>
+        <div
+            class="external-login-button"
+            @click="authStore.loginWithGithub"
+        ><img
+                class="auth-logos"
+                src="/imgs/GitHub_Invertocat_Logo.svg"
+            >Login with Github</div>
+        <h5>or</h5>
+        <div
+            style="display:flex; align-items: center; justify-content: center;"
+            class="external-login-button"
+            @click="authStore.loginAnonymously"
+        >Go for Ninja Mode!</div>
     </div>
 </template>
 
@@ -92,7 +123,40 @@ input:-webkit-autofill:focus {
 
 }
 
+.external-login-button {
+    height: 5vh;
+    border: 0 solid rgba(3, 3, 3, 0.05);
+    border-radius: 4px;
+    background-color: rgba(3, 3, 3, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
 .login-button:hover {
     background-color: rgba(215, 187, 245, 0.);
 }
+
+.auth-logos {
+    width: inherit;
+    height: inherit;
+}
+
+.external-auth {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 5px;
+}
+
+.external-auth h5 {
+    text-align: center;
+    font-weight: normal;
+}
+
+.auth-inputs h5 {
+    text-align: center;
+    font-weight: normal;
+}
 </style>
+

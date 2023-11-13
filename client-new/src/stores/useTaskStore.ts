@@ -130,12 +130,17 @@ export default defineStore('task-store', {
             try {
                 const db = getFirestore(Fireapp)
 
-                const docRef = doc(db, 'tasks', this.editedTask.id)
+                if (typeof this.editedTask.id === 'string') {
+                    const docRef = doc(db, 'tasks', this.editedTask.id)
 
-                await updateDoc(docRef, {
-                    title: this.editedTask.title,
-                    text: this.editedTask.text
-                })
+                    await updateDoc(docRef, {
+                        title: this.editedTask.title,
+                        text: this.editedTask.text,
+                        scoring: this.editedTask.scoring,
+                        plannedDate: this.editedTask.plannedDate,
+                        createdAt: serverTimestamp(),
+                    })
+                }
             } catch (error) {
                 console.error(error)
             }

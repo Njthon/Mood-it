@@ -27,6 +27,7 @@
             <button
                 class="signup-button"
                 type="submit"
+                @click="authStore.signUp(email, password)"
             >Signup
             </button>
         </div>

@@ -27,7 +27,6 @@ import ButtonApp from "./components/ButtonApp.vue"
 import AuthPageAppVue from "./components/AuthPageApp.vue"
 import HeaderMenuApp from "./components/HeaderMenuApp.vue"
 import TitleApp from "./components/TitleApp.vue"
-import TasksDashboard from "./components/TasksDashboard.vue"
 import useTaskStore from "./stores/useTaskStore"
 import EditTaskModal from "./components/EditTaskModal.vue"
 import { onMounted } from 'vue'

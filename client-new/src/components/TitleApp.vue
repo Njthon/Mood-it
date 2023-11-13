@@ -5,19 +5,35 @@
     </div>
 </template>
 
-
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import * as klouds from 'klouds'
+import { useAuthStore } from '@/stores/auth'
+
+const authStore = useAuthStore()
+
+let cloudColor1 = '#e6e4eb'
+let cloudColor2 = '#FFFFFF'
+let bgColor = '#0092e8'
+
+
+// if (authStore.isAnonymous) {
+//     cloudColor1 = "#850101"
+//     cloudColor2 = "#222222"
+//     bgColor = "#000000"
+// }
 
 onMounted(() => {
     var mySky = klouds.create({
         selector: '#my-canvas-title',
         layerCount: 3,
         speed: 1,
-        cloudColor1: '#e6e4eb',
-        cloudColor2: '#FFFFFF',
-        bgColor: '#0092e8'
+        // @ts-ignore
+        cloudColor1: cloudColor1,
+        // @ts-ignore
+        cloudColor2: cloudColor2,
+        // @ts-ignore
+        bgColor: bgColor
     })
 })
 </script>
@@ -40,4 +56,3 @@ h1 {
     left: 35%;
 }
 </style>
-

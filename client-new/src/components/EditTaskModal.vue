@@ -179,6 +179,8 @@ watch(inputDate, (newDate) => {
     display: flex;
     justify-content: flex-end;
     margin-right: 20px;
+    transition: all 1s;
+    ;
 }
 
 .add-task input {
@@ -191,6 +193,7 @@ watch(inputDate, (newDate) => {
     padding: 10px;
     padding-top: 0;
     height: 80%;
+    transition: all 1s;
 }
 
 .planned-date-div {
