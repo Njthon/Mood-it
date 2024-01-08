@@ -2,7 +2,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import './assets/main.css'
-import axios from 'axios'
 import App from './App.vue'
 import {
     getFirestore, collection, getDocs, addDoc,
@@ -12,21 +11,14 @@ import {
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check"
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 import useTaskStore from './stores/useTaskStore'
+import { initializeApp } from "firebase/app"
+import { getAnalytics } from "firebase/analytics"
+import { createRouter, createWebHistory } from 'vue-router'
 
 const app = createApp(App)
 
 app.use(createPinia())
 
-
-
-
-import { initializeApp } from "firebase/app"
-import { getAnalytics } from "firebase/analytics"
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: "AIzaSyAriz0LJhzv8JzJ4Aqf8R7JL7LW2B544V8",
     authDomain: "mood-it-a1b50.firebaseapp.com",
@@ -43,10 +35,11 @@ export { Fireapp }
 
 const analytics = getAnalytics(Fireapp)
 
-const db = getFirestore()
-const auth = getAuth()
+const db = getFirestore(Fireapp)
+const auth = getAuth(Fireapp)
 
 const colRef = collection(db, 'tasks')
+const chatRoomCollection = collection(db, "chatRooms")
 
 const q = query(colRef, orderBy('createdAt'))
 

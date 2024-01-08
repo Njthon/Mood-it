@@ -3,17 +3,18 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "serve": "vue-cli-service serve --host localhost --port 7700",
     "build": "run-p type-check build-only",
-    "preview": "vite preview",
-    "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "build-only": "vite build",
+    "dev": "vite",
     "format": "prettier --write src/",
-    "serve": "vue-cli-service serve --host localhost --port 7700"
+    "preview": "vite preview",
+    "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
   },
   "dependencies": {
     "@fontsource/poppins": "^5.0.8",
+    "@quasar/extras": "^1.0.0",
     "axios": "^1.5.0",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.9",
@@ -21,6 +22,7 @@
     "firebaseui": "^6.1.0",
     "klouds": "^2.1.1",
     "pinia": "^2.1.6",
+    "quasar": "^2.0.0",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"
   },
@@ -39,6 +41,7 @@
     "sass": "^1.66.1",
     "typescript": "~5.1.6",
     "vite": "^4.4.9",
+    "vue-cli-plugin-quasar": "~5.0.2",
     "vue-tsc": "^1.8.8"
   }
 }

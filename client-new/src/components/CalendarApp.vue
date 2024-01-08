@@ -115,11 +115,9 @@ button {
 
 .next-day h5 {
     margin-right: 5px;
-    font-weight: normal;
 }
 
 .prev-day h5 {
     margin-left: 5px;
-    font-weight: normal;
 }
 </style>

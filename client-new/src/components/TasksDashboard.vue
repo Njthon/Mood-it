@@ -1,122 +1,157 @@
 <template>
-  <div>
-    <div
-      v-for="task in filteredTasks"
-      :key="task.id"
-    >
-      <div
-        class="task-container"
-        @click="taskStore.openEditTask(task)"
-      >{{ task.title }}
-        <input
-          class="isDone"
-          type="checkbox"
-          v-model="task.isDone"
-          @click.stop
-        />
-        <button
-          @click.stop="taskStore.deleteTask(task)"
-          class="delete-btn"
-        >🗑️</button>
-      </div>
+    <div class="chat-login-container">
+        <h3>Someday</h3>
+        <div class="chat-app-container">
+
+            <div>
+                <div
+                    class="tasks"
+                    v-for="task in filteredTasks"
+                    :key="task.id"
+                >
+                    <div>
+                        <div
+                            class="task-container"
+                            @click="taskStore.openEditTask(task)"
+                        >
+                            <div class="task-container-icons">
+                                <input
+                                    class="isDone"
+                                    type="checkbox"
+                                    v-model="task.isDone"
+                                    @click.stop
+                                />
+                                <button
+                                    @click.stop="taskStore.deleteTask(task)"
+                                    class="delete-btn"
+                                >🗑️</button>
+                            </div>
+                            <i>{{ task.title }}</i>
+                            <div>
+                                <div class="pst-div">
+                                    <p>
+                                        Pleasure
+                                    <div
+                                        class="scoring-inputs"
+                                        v-for="n in Array.from({ length: task.scoring.pleasure }, (_, i) => i + 1)"
+                                        :key="n"
+                                    >
+                                    </div>
+                                    </p>
+                                </div>
+                                <div class="pst-div">
+                                    <p>
+                                        Stress
+                                    <div
+                                        class="scoring-inputs"
+                                        v-for="n in Array.from({ length: task.scoring.stress }, (_, i) => i + 1)"
+                                        :key="n"
+                                    >
+                                    </div>
+                                    </p>
+                                </div>
+                                <div class="pst-div">
+                                    <p>
+                                        Time
+                                    <div
+                                        class="scoring-inputs"
+                                        v-for="n in Array.from({ length: task.scoring.time }, (_, i) => i + 1)"
+                                        :key="n"
+                                    >
+                                    </div>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup lang="ts">
+import CalendarApp from "./CalendarApp.vue"
 import useTaskStore from '@/stores/useTaskStore'
 import { computed } from 'vue'
 import { useDateStore } from '@/stores/date'
+import { Fireapp } from '@/main'
+import { getFirestore } from "firebase/firestore"
+import { ref } from "vue"
+import CalendarTasks from "./CalendarTasks.vue"
 
+const showCalendarApp = ref(false)
 const taskStore = useTaskStore()
-const dateStore = useDateStore()
+const db = getFirestore(Fireapp)
+
 const filteredTasks = computed(() => {
-  return taskStore.tasks.filter((task) => task.plannedDate === dateStore.formattedDate && task.title !== "")
+    return taskStore.tasks.filter((task) => task.plannedDate === "" && task.title !== "")
 })
+
+console.log(taskStore.tasks)
+
+
+
 </script>
 
 <style>
-.task-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 20px;
-  height: 50px;
-  background-color: rgba(255, 243, 243, 0.4);
-  border: 2px solid rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  transition: background-color 1s;
-  padding: 15px;
-  width: 90%;
+header {
+    display: flex;
+    justify-content: center;
+    height: 60px;
+    width: 100%;
+    border: 2px groove rgba(141, 141, 141, 0.2);
+    border-top: 0;
+    border-top-color: rgba(141, 141, 141, 0);
+    border-left: 0;
+    border-right: 0;
 }
 
-.task-container:hover {
-  background-color: #f9eeff;
 
+header button {
+    flex: 1;
+    text-align: center;
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    border-bottom: 1px black solid;
 }
 
-.task-edit {
-  display: flex;
-  flex-direction: column;
-  background-color: rgba(255, 255, 255, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-content: start;
-  flex-wrap: wrap;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(4px);
-  z-index: 0;
+.delete-btn {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
 }
 
-input[type='checkbox'] {
-  -webkit-appearance: none;
-  appearance: none;
-  background-color: rgba(147, 147, 147, 0.2);
-  width: 21px;
-  height: 21px;
-  border: 1px solid black;
-  margin-right: 10px;
+.show-someday :hover {
+    border-right: 1px solid black;
 }
 
-input[type='checkbox']:checked {
-  background-color: green;
-}
-
-.isDone {
-  width: 21px;
-}
-
-.save-delete-btn {
-  height: 5vh;
-  width: 15vh;
-  border: 0 solid rgba(3, 3, 3, 0.05);
-  border-radius: 4px;
-  background-color: rgba(3, 3, 3, 0.05);
-  margin: 20px;
-  padding: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background-color 1s;
+.show-calendar :hover {
+    border-left: 1px solid black;
 
 }
 
-.save-delete-btn:hover {
-  background-color: #f9eeff;
-
+.task-container p {
+    display: flex;
+    justify-content: flex-end;
+    font-size: smaller;
 }
 
-.save-delete-cntr {
-  display: flex;
-}
-
-.range-container {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  gap: 20px
+.scoring-inputs {
+    width: 14px;
+    border: 1px solid #000;
+    border-radius: 50%;
+    margin: 1px
 }
 </style>

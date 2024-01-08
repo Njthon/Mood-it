@@ -2,7 +2,8 @@ import { defineStore } from 'pinia'
 import { reactive, ref } from 'vue'
 import {
     getAuth, createUserWithEmailAndPassword, setPersistence, browserSessionPersistence, signOut, signInWithEmailAndPassword,
-    signInWithPopup
+    signInWithPopup,
+    updateProfile
 } from 'firebase/auth'
 import { onAuthStateChanged } from 'firebase/auth'
 import useTaskStore from '@/stores/useTaskStore'
@@ -12,11 +13,9 @@ import { GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider, signInAno
 export const useAuthStore = defineStore('auth-store', () => {
     const taskStore = useTaskStore()
     const isAnonymous = reactive({ value: false })
-
     const auth = getAuth()
-    auth.languageCode = 'it'
     const user = ref(auth.currentUser)
-
+    auth.languageCode = 'it'
 
     onAuthStateChanged(auth, (currentUser) => {
         user.value = currentUser
@@ -96,6 +95,19 @@ export const useAuthStore = defineStore('auth-store', () => {
             })
     }
 
+    const setUsername = () => {
+        user.value = auth.currentUser
+        if (auth.currentUser) {
+            updateProfile(auth.currentUser, {
+                displayName: user.value?.displayName
+            }).then(() => {
+                console.log("Username Updated")
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
+    }
+
     const signUp = (email: string, password: string) => {
         const auth = getAuth()
 
@@ -107,6 +119,7 @@ export const useAuthStore = defineStore('auth-store', () => {
                 console.error('Signup error:', error)
             })
     }
+    return { user, logout, login, loginWithGoogle, loginWithFacebook, loginWithGithub, loginAnonymously, setUsername, signUp }
 
-    return { user, isAnonymous, login, logout, signUp, loginWithGoogle, loginWithFacebook, loginWithGithub, loginAnonymously }
-})
+}
+)

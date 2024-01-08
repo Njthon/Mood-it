@@ -68,6 +68,7 @@ const authStore = useAuthStore()
 
 <style>
 .logout-icon {
+    background-color: white;
     position: absolute;
     height: 30px;
     width: 30px;

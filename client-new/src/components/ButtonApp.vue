@@ -2,7 +2,6 @@
     <footer>
         <button
             @click="onClick()"
-            :style="{ background: color }"
             class="btn"
         >
             {{ buttonText }}
@@ -15,10 +14,6 @@ import useTaskStore from '@/stores/useTaskStore'
 import { computed } from 'vue'
 
 const taskStore = useTaskStore()
-
-const color = computed(() => {
-    return taskStore.isEditedTaskOpen ? 'rgba(0, 146, 232, 0.2)' : 'rgb(0, 146, 232)'
-})
 
 const buttonText = computed(() => {
     return taskStore.isEditedTaskOpen ? "Save" : "Create"
@@ -40,21 +35,20 @@ const onClick = () => {
 
 <style scoped>
 .btn {
-    display: inline-block;
-    color: #ffffff;
-    border: 1px black solid;
-    border-bottom: 0;
-    border-left: 0;
-    border-right: 0;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 15px;
-    font-family: inherit;
-    width: 100%;
-    height: 70px;
-    z-index: 4;
+    border: 2px black solid;
+    border-radius: 10px;
+    background-color: #5ce5e1;
+    margin: 5px 5px 5px 0;
+    padding: 2px;
+    width: 50%;
+    height: 50px;
+    font-weight: 500;
+
+}
+
+.btn:hover {
+    filter: brightness(150%);
+    transition: all 0.5s;
 }
 
 .btn:focus {
@@ -75,10 +69,6 @@ a {
 }
 
 footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    margin-top: 30px;
     text-align: center;
 }
 </style>
