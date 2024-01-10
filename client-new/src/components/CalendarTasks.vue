@@ -50,13 +50,15 @@ const filteredTasks = computed(() => {
 .task-container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin: 2px 0 2px 20px;
-  height: 50px;
+  height: 67px;
   background-color: rgba(255, 243, 243, 0.4);
   border-radius: 8px;
   transition: background-color 1s;
-  padding: 15px;
+  padding: 5px;
   width: 90%;
+  overflow: auto;
 }
 
 .task-container:hover {

@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-parsing-error -->
 <template>
     <div class="chat-login-container">
         <h3>Someday</h3>
@@ -26,7 +27,7 @@
                                     class="delete-btn"
                                 >🗑️</button>
                             </div>
-                            <i>{{ task.title }}</i>
+                            <div class="task-test">{{ task.title }}</div>
                             <div>
                                 <div class="pst-div">
                                     <p>
@@ -89,11 +90,6 @@ const db = getFirestore(Fireapp)
 const filteredTasks = computed(() => {
     return taskStore.tasks.filter((task) => task.plannedDate === "" && task.title !== "")
 })
-
-console.log(taskStore.tasks)
-
-
-
 </script>
 
 <style>
@@ -140,6 +136,10 @@ header button {
 .show-calendar :hover {
     border-left: 1px solid black;
 
+}
+
+.task-container h3 {
+    font-weight: normal;
 }
 
 .task-container p {

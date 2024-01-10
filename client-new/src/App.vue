@@ -201,7 +201,7 @@ body {
       font-weight: 900;
       display: flex;
       flex-direction: column;
-      flex: 1;
+      flex: 2;
       background-color: #5ce5e1;
       justify-content: space-between;
 
@@ -216,6 +216,7 @@ body {
       flex-direction: column;
       justify-content: flex-start;
       min-width: 50%;
+      flex: 2;
     }
 
     .chat-login-container h3 {
