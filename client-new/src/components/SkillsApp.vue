@@ -71,6 +71,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    flex: 1;
 }
 
 .paragraph-1 {

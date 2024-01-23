@@ -5,14 +5,14 @@
             <div>
                 <div class="future-dots"></div>
             </div>
-            <text>Mood Graphic</text>
+            <b>Mood Graphic</b>
             <p>Visual representation of mood trends over time.</p>
         </div>
         <div class="future-paragraph">
             <div>
                 <div class="future-dots"></div>
             </div>
-            <text> Symbolic Task Difficulty</text>
+            <b> Symbolic Task Difficulty</b>
             <p>Tasks will be represented by symbols indicating both difficulty and the expected pleasure upon completion.
             </p>
         </div>
@@ -21,7 +21,7 @@
             <div>
                 <div class="future-dots"></div>
             </div>
-            <text>Suggested Tasks</text>
+            <b>Suggested Tasks</b>
             <p>Receive task suggestions based on urgency, deadline, and your current mood, optimizing your productivity.</p>
         </div>
     </div>
@@ -42,7 +42,9 @@
 .future-paragraph {
     display: flex;
     align-items: center;
-    gap: 5px
+    gap: 5px;
+    font-size: large;
+
 }
 
 .future-dots {

@@ -22,10 +22,7 @@
             <CalendarTasks />
             <div>
             </div>
-            <EditTaskModal
-              v-if="!taskStore.isXClicked"
-              v-show="taskStore.isEditedTaskOpen"
-            />
+            <EditTaskModal v-if="taskStore.isEditedTaskOpen && navStore.toggleMoodIt" />
             <ButtonApp v-if="navStore.toggleMoodIt" />
           </div>
         </div>
