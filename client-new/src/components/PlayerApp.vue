@@ -4,7 +4,10 @@
             width="50"
             height="50"
             xmlns="http://www.w3.org/2000/svg"
-            style="margin-left: 50px; top:20px;"
+            style="margin-left: 50px;
+                   top: 5px;
+                   margin-top: 25px;
+"
         >
             <circle
                 r="30"

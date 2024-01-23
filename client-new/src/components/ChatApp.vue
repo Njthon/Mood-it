@@ -93,5 +93,6 @@ watch(() => chatStore.currentChatRoom?.messages, async (messages) => {
     display: flex;
     flex-direction: column;
 
+
 }
 </style>

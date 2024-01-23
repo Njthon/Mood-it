@@ -37,7 +37,7 @@ const onClick = () => {
 .btn {
     border: 2px black solid;
     border-radius: 10px;
-    background-color: #5ce5e1;
+    background-color: #f7f4f4;
     margin: 5px 5px 5px 0;
     padding: 2px;
     width: 50%;

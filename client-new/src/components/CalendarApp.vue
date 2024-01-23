@@ -15,7 +15,8 @@
             <h4>{{ formattedDate }}</h4>
         </div>
         <div
-            class="next-day"
+            c
+            lass="next-day"
             @click="nxtClick()"
         >
             <h5> {{ formNextDay.value }}</h5>

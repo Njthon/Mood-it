@@ -88,10 +88,10 @@ export const useAuthStore = defineStore('auth-store', () => {
         signInAnonymously(auth)
             .then(() => {
                 isAnonymous.value = true
-                console.log('Ninja mode on!')
+                console.log('Stealth mode on!')
             })
             .catch((error) => {
-                console.error('Ninja mode error')
+                console.error('Stealth mode error')
             })
     }
 

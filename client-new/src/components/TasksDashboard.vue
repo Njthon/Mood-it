@@ -1,90 +1,107 @@
 <!-- eslint-disable vue/no-parsing-error -->
 <template>
     <div class="chat-login-container">
-        <h3>Someday</h3>
-        <div class="chat-app-container">
+        <ResumeApp v-if="navStore.toggleResume" />
+        <div v-else-if="navStore.toggleMoodIt">
+            <h3>Someday</h3>
+            <div class="chat-app-container">
+                <div>
+                    <TransitionGroup name="list">
 
-            <div>
-                <div
-                    class="tasks"
-                    v-for="task in filteredTasks"
-                    :key="task.id"
-                >
-                    <div>
                         <div
-                            class="task-container"
-                            @click="taskStore.openEditTask(task)"
+                            class="tasks"
+                            v-for="task in filteredTasks"
+                            :key="task.id"
                         >
-                            <div class="task-container-icons">
-                                <input
-                                    class="isDone"
-                                    type="checkbox"
-                                    v-model="task.isDone"
-                                    @click.stop
-                                />
-                                <button
-                                    @click.stop="taskStore.deleteTask(task)"
-                                    class="delete-btn"
-                                >🗑️</button>
-                            </div>
-                            <div class="task-test">{{ task.title }}</div>
                             <div>
-                                <div class="pst-div">
-                                    <p>
-                                        Pleasure
-                                    <div
-                                        class="scoring-inputs"
-                                        v-for="n in Array.from({ length: task.scoring.pleasure }, (_, i) => i + 1)"
-                                        :key="n"
-                                    >
+                                <div
+                                    class="task-container"
+                                    @click="taskStore.openEditTask(task)"
+                                >
+                                    <div class="task-container-icons">
+                                        <input
+                                            class="isDone"
+                                            type="checkbox"
+                                            v-model="task.isDone"
+                                            @click.stop
+                                        />
+                                        <button
+                                            @click.stop="taskStore.deleteTask(task)"
+                                            class="delete-btn"
+                                        >🗑️</button>
                                     </div>
-                                    </p>
-                                </div>
-                                <div class="pst-div">
-                                    <p>
-                                        Stress
-                                    <div
-                                        class="scoring-inputs"
-                                        v-for="n in Array.from({ length: task.scoring.stress }, (_, i) => i + 1)"
-                                        :key="n"
-                                    >
+                                    <div class="task-text">{{ task.title }}</div>
+                                    <div>
+                                        <div class="pst-div">
+                                            <p>
+                                            <div class="scoring-text">
+                                                Pleasure
+                                            </div>
+                                            <div class="scoring-container">
+                                                <div
+                                                    class="scoring-inputs"
+                                                    v-for="n in Array.from({ length: task.scoring.pleasure }, (_, i) => i + 1)"
+                                                    :key="n"
+                                                >
+                                                </div>
+                                            </div>
+                                            </p>
+                                        </div>
+                                        <div class="pst-div">
+                                            <p>
+                                            <div class="scoring-text">Stress</div>
+                                            <div class="scoring-container">
+                                                <div
+                                                    class="scoring-inputs"
+                                                    v-for="n in Array.from({ length: task.scoring.stress }, (_, i) => i + 1)"
+                                                    :key="n"
+                                                >
+                                                </div>
+                                            </div>
+                                            </p>
+                                        </div>
+                                        <div class="pst-div">
+                                            <p>
+                                            <div class="scoring-text">Time</div>
+                                            <div class="scoring-container">
+                                                <div
+                                                    class="scoring-inputs"
+                                                    v-for="n in Array.from({ length: task.scoring.time }, (_, i) => i + 1)"
+                                                    :key="n"
+                                                >
+                                                </div>
+                                            </div>
+                                            </p>
+                                        </div>
                                     </div>
-                                    </p>
-                                </div>
-                                <div class="pst-div">
-                                    <p>
-                                        Time
-                                    <div
-                                        class="scoring-inputs"
-                                        v-for="n in Array.from({ length: task.scoring.time }, (_, i) => i + 1)"
-                                        :key="n"
-                                    >
-                                    </div>
-                                    </p>
+
                                 </div>
                             </div>
-
                         </div>
-                    </div>
+                    </TransitionGroup>
                 </div>
             </div>
-
         </div>
+        <AboutMoodItApp v-else />
     </div>
 </template>
 
 <script setup lang="ts">
 import CalendarApp from "./CalendarApp.vue"
 import useTaskStore from '@/stores/useTaskStore'
+import useNavStore from '@/stores/navbar'
 import { computed } from 'vue'
 import { useDateStore } from '@/stores/date'
 import { Fireapp } from '@/main'
 import { getFirestore } from "firebase/firestore"
 import { ref } from "vue"
 import CalendarTasks from "./CalendarTasks.vue"
+import ResumeApp from "./ResumeApp.vue"
+import AboutMoodItApp from "./AboutMoodItApp.vue"
 
 const showCalendarApp = ref(false)
 const taskStore = useTaskStore()
+const navStore = useNavStore()
 const db = getFirestore(Fireapp)
 
 const filteredTasks = computed(() => {
@@ -144,14 +161,38 @@ header button {
 
 .task-container p {
     display: flex;
-    justify-content: flex-end;
     font-size: smaller;
 }
 
 .scoring-inputs {
-    width: 14px;
+    width: 12px;
     border: 1px solid #000;
     border-radius: 50%;
     margin: 1px
+}
+
+.scoring-container {
+    display: flex;
+    width: 48px;
+}
+
+.scoring-text {
+    width: 50px;
+    font-size: smaller;
+}
+
+.task-text {
+    flex-grow: 3;
+}
+
+.list-enter-active,
+.list-leave-active {
+    transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
 }
 </style>

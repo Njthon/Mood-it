@@ -187,7 +187,7 @@ watch(inputDate, (newDate) => {
     height: 30px;
     width: 200px;
     border-bottom: 3px black solid;
-    background-color: #5ce5e1;
+    background-color: #f7f4f4;
     margin: 5px;
     padding: 2px;
     outline: none;
@@ -197,13 +197,13 @@ watch(inputDate, (newDate) => {
 
 .add-task input:focus {
     border-bottom: 1px black solid;
-    background-color: #5ce5e1;
+    background-color: #f7f4f4;
     outline: none;
 }
 
 .add-task input:hover {
     border-bottom: 2px black solid;
-    background-color: #5ce5e1;
+    background-color: #f7f4f4;
     outline: none;
 }
 
@@ -218,7 +218,7 @@ watch(inputDate, (newDate) => {
 .add-form button {
     border: 2px black solid;
     border-radius: 10px;
-    background-color: #5ce5e1;
+    background-color: #f7f4f4;
     margin: 5px 5px 5px 0;
     padding: 2px;
     width: 30%;
@@ -254,7 +254,7 @@ form button {
 }
 
 input[type="range"] {
-    accent-color: #0092e8;
+    accent-color: black;
 
 }
 
@@ -266,7 +266,7 @@ input[type="radio"] {
 }
 
 input[type="radio"]:checked {
-    background: #0092e8;
+    background: black;
     border: 1px solid #000;
     border-radius: 50%;
 
@@ -283,7 +283,7 @@ input[type="radio"]:checked {
 }
 
 .square.active {
-    background: #0092e8;
+    background: black;
     border-radius: 50%;
 
 }

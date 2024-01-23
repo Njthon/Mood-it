@@ -47,11 +47,11 @@
                 src="/imgs/GitHub_Invertocat_Logo.svg"
             >Login with Github</div>
         <h5>or</h5>
-        <div
+        <h4
             style="display:flex; align-items: center; justify-content: center;"
             class="external-login-button"
             @click="authStore.loginAnonymously"
-        >Go for Ninja Mode!</div>
+        >Go for Stealth Mode!</h4>
     </div>
 </template>
 
@@ -67,23 +67,12 @@ const authStore = useAuthStore()
 </script>
 
 <style>
-.logout-icon {
-    background-color: white;
-    position: absolute;
-    height: 30px;
-    width: 30px;
-    top: 1%;
-    left: 90%;
-    opacity: 0.3;
-    z-index: 2;
-}
-
-
 .auth-card {
+    color: black;
     position: absolute;
     top: 50%;
     left: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.05);
+    border: 2px solid black;
     border-radius: 8px;
     display: flex;
     justify-content: center;
@@ -118,16 +107,16 @@ input:-webkit-autofill:focus {
 
 .login-button {
     height: 5vh;
-    border: 0 solid rgba(3, 3, 3, 0.05);
-    border-radius: 4px;
+    border: 2px solid black;
+    border-radius: 10px;
     background-color: rgba(3, 3, 3, 0.05);
 
 }
 
 .external-login-button {
     height: 5vh;
-    border: 0 solid rgba(3, 3, 3, 0.05);
-    border-radius: 4px;
+    border: 2px solid black;
+    border-radius: 10px;
     background-color: rgba(3, 3, 3, 0.05);
     display: flex;
     align-items: center;
@@ -141,6 +130,7 @@ input:-webkit-autofill:focus {
 .auth-logos {
     width: inherit;
     height: inherit;
+    z-index: -1;
 }
 
 .external-auth {

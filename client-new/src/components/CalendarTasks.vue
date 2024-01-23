@@ -1,12 +1,8 @@
+<!-- eslint-disable vue/no-parsing-error -->
 <template>
-  <CalendarApp v-show="!taskStore.isEditedTaskOpen" />
-  <div
-    class="tasks"
-    v-show="!taskStore.isEditedTaskOpen"
-  >
-  </div>
-
-  <div>
+  <SkillsApp v-if="navStore.toggleResume" />
+  <div v-if="navStore.toggleMoodIt">
+    <CalendarApp />
     <div
       v-for="task in filteredTasks"
       :key="task.id"
@@ -27,10 +23,55 @@
             class="delete-btn"
           >🗑️</button>
         </div>
-        {{ task.title }}
+        <div class="task-text">{{ task.title }}</div>
+        <div>
+          <div class="pst-div">
+            <p>
+            <div class="scoring-text">
+              Pleasure
+            </div>
+            <div class="scoring-container">
+              <div
+                class="scoring-inputs"
+                v-for="n in Array.from({ length: task.scoring.pleasure }, (_, i) => i + 1)"
+                :key="n"
+              >
+              </div>
+            </div>
+            </p>
+          </div>
+          <div class="pst-div">
+            <p>
+            <div class="scoring-text">Stress</div>
+            <div class="scoring-container">
+              <div
+                class="scoring-inputs"
+                v-for="n in Array.from({ length: task.scoring.stress }, (_, i) => i + 1)"
+                :key="n"
+              >
+              </div>
+            </div>
+            </p>
+          </div>
+          <div class="pst-div">
+            <p>
+            <div class="scoring-text">Time</div>
+            <div class="scoring-container">
+              <div
+                class="scoring-inputs"
+                v-for="n in Array.from({ length: task.scoring.time }, (_, i) => i + 1)"
+                :key="n"
+              >
+              </div>
+            </div>
+            </p>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
+  <FutureMoodItApp v-else-if="navStore.toggleConcept" />
 </template>
 
 <script setup lang="ts">
@@ -38,9 +79,13 @@ import useTaskStore from '@/stores/useTaskStore'
 import { computed } from 'vue'
 import { useDateStore } from '@/stores/date'
 import CalendarApp from './CalendarApp.vue'
+import SkillsApp from './SkillsApp.vue'
+import useNavStore from '@/stores/navbar'
+import FutureMoodItApp from './FutureMoodIt.app.vue'
 
 const taskStore = useTaskStore()
 const dateStore = useDateStore()
+const navStore = useNavStore()
 const filteredTasks = computed(() => {
   return taskStore.tasks.filter((task) => task.plannedDate === dateStore.formattedDate && task.title !== "")
 })
@@ -51,18 +96,39 @@ const filteredTasks = computed(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 2px 0 2px 20px;
+  margin: 30px 0 2px 20px;
   height: 67px;
-  background-color: rgba(255, 243, 243, 0.4);
+  background-color: #f7f4f4;
+  border: 2px solid black;
   border-radius: 8px;
   transition: background-color 1s;
   padding: 5px;
   width: 90%;
   overflow: auto;
+  z-index: 1;
+}
+
+.tasks {
+  position: relative;
+  z-index: 1;
+}
+
+.tasks:before {
+  content: "";
+  background-image: linear-gradient(310deg, rgb(0, 0, 0) 11%, rgb(116, 116, 116) 84%);
+  height: 100%;
+  width: 90%;
+  height: 100%;
+  border-radius: 8px;
+  border: 2px solid black;
+  position: absolute;
+  z-index: -4;
+  transform: translate(23px, 4px);
 }
 
 .task-container:hover {
-  background-color: #f9eeff;
+  /* transform: translate(12.5px, 12px); */
+
 
 }
 
