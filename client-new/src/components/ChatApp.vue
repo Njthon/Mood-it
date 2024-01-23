@@ -14,7 +14,7 @@
                 ref="messagesContainer"
             >
                 <div
-                    v-for="(message, index) in chatStore.currentChatRoom?.messages"
+                    v-for="(message, /*index*/) in chatStore.currentChatRoom?.messages"
                     :key="message.id"
                 >
                     {{ authStore.user?.displayName }} {{ message.messages }}
@@ -45,17 +45,6 @@ const messagesContainer = ref<HTMLElement | null>(null)
 
 onMounted(() => {
     chatStore.ListenChanges()
-    // document.getElementsByClassName("chat-app-container")[0].scroll({
-
-    //     top: 2000000,
-    //     left: 0,
-    //     behavior: "smooth",
-    // })
-    // document.getElementsByClassName("chat-container")[0].scroll({
-    //     top: 2000000,
-    //     left: 0,
-    //     behavior: "smooth",
-    // })
 })
 
 

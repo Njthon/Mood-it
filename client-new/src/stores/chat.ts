@@ -151,7 +151,7 @@ export default defineStore('chat-store', {
                         return a.timestamp - b.timestamp
                     })
                     console.log(messages.length)
-                    this.currentChatRoom.messages = messages
+                    /* this.currentChatRoom.messages = messages*/
                 })
             }
         }
